@@ -517,7 +517,6 @@ async fn main() -> anyhow::Result<()> {
         return Ok(());
     }
 
-    let sigint_receiver = setup_sigint_handler();
     tracing::warn!("The external node is in the alpha phase, and should be used with caution.");
     tracing::info!("Started the external node");
     let main_node_url = config
@@ -554,6 +553,7 @@ async fn main() -> anyhow::Result<()> {
         opt.enable_snapshots_recovery,
     )
     .await?;
+    let sigint_receiver = setup_sigint_handler();
 
     let (stop_sender, stop_receiver) = watch::channel(false);
     let mut task_handles = vec![];
